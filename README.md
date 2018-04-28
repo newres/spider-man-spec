@@ -1,6 +1,6 @@
 # spider-man-spec
 
-A Clojure library designed to demonstrate the use the clojure.spec library using Spider-Man.
+A Clojure library designed to demonstrate the use of the clojure.spec library using Spider-Man.
 
 ## Usage
 
