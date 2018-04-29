@@ -34,8 +34,13 @@
 
 (deftest affiliation-valid-test
   (testing "You can use specs for maps to check for the validity of affiliations."
-    (let [spider-man-affiliations (:spider-man-profile/affiliations spider-man-profile)]
-      (is (s/valid? :spider-man-spec.core/identity :spider-man-spec.core/secret)))))
+    (let [spider-man-affiliations (:spider-man-spec.core/affiliations spider-man-profile)]
+      (is (s/valid? :spider-man-spec.core/affiliations spider-man-affiliations)))))
+
+(deftest affiliation-conform-test
+  (testing "In the case of more complex specs, such as for affiliations, conform can be helpful. Note that in this case the map is namespaced."
+    (let [spider-man-affiliations (:spider-man-spec.core/affiliations spider-man-profile)]
+      (is (= #:spider-man-spec.core{:current-affiliations #{"Avengers"}, :former-affiliations #{"The Outlaws" "Secret Defenders" "New Fantastic Four"}} (s/conform :spider-man-spec.core/affiliations spider-man-affiliations))))))
 
 (deftest power-value-valid-test
   (testing "You can create specs from combined specs to express the limits of a power value."
@@ -67,6 +72,14 @@
   (testing "Checking if vulture is not accepted as an Avenger.")
   (is (not (is-avenger? vulture-profile))))
 
+(deftest spider-man-has-a-valid-profile-test
+  (testing "Checking if Spider-Man fulfills the profile spec.")
+  (is (s/valid? :spider-man-spec.core/profile spider-man-profile )))
+
+(deftest vulture-has-a-valid-profile-test
+  (testing "Checking if Vulture fulfills the profile spec.")
+  (is (s/valid? :spider-man-spec.core/profile vulture-profile )))
+
 (deftest spider-man-is-an-avenger-test
   (testing "Checking if Spider-Man fulfills the avenger-profile spec.")
   (is (s/valid? :spider-man-spec.core/avenger-profile spider-man-profile )))
@@ -74,11 +87,3 @@
 (deftest vulture-is-not-an-avenger-test
   (testing "Checking if Vulture does not fulfill the avenger-profile spec.")
   (is (not (s/valid? :spider-man-spec.core/avenger-profile vulture-profile ))))
-
-;; (deftest spider-man-name-test
-;;   (testing "Spider-Man's profile should have the right name."
-;;     (is (= (:spider-man-spec.core/name spider-man-profile) "Spider-Man"))))
-
-;; (deftest spider-man-real-name-test
-;;   (testing "Spider-Man's profile should have the right real name."
-;;     (is (= (:spider-man-spec.core/real-name spider-man-profile) "Peter Benjamin Parker"))))

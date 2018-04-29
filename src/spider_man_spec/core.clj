@@ -53,7 +53,7 @@
 (s/def ::fighting ::power-value )
 (s/def ::intelligence ::power-value )
 (s/def ::speed ::power-value )
-(s/def ::strenght ::power-value )
+(s/def ::strength ::power-value )
 
 (s/def ::power-grid (s/keys :req [::durability ::energy ::fighting ::intelligence ::speed ::strength] ) )
 
